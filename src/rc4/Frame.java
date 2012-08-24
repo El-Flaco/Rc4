@@ -58,6 +58,11 @@ public class Frame extends javax.swing.JFrame {
 
         t_msj.setColumns(20);
         t_msj.setRows(5);
+        t_msj.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                t_msjKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(t_msj);
 
         t_cifrado.setEditable(false);
@@ -196,12 +201,12 @@ public class Frame extends javax.swing.JFrame {
             
             if(t_plano.isSelected()){
                 for(int v=0;v<mensaje.length();v++){
-                int r = mensaje.charAt(v) ^ cifrador.prga();
-                res = Integer.toHexString(r);
-                if(res.length()<2){
-                    res = cero.concat(res);
-                }
-                cifrado = cifrado.concat(res);
+                    int r = mensaje.charAt(v) ^ cifrador.prga();
+                    res = Integer.toHexString(r);
+                    if(res.length()<2){
+                        res = cero.concat(res);
+                    }
+                    cifrado = cifrado.concat(res);
                 }
             }else{
                 cifrado = cifrador.decode(mensaje);
@@ -240,6 +245,12 @@ public class Frame extends javax.swing.JFrame {
     private void t_planoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_t_planoItemStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_t_planoItemStateChanged
+
+    private void t_msjKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_t_msjKeyTyped
+        if(t_msj.getText().length() > 255){
+            evt.consume();
+        }
+    }//GEN-LAST:event_t_msjKeyTyped
 
     /**
      * @param args the command line arguments
